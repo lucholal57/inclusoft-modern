@@ -1,0 +1,27 @@
+.users-page { background: #f7f8fb; color: #172033; min-height: 100vh; }
+.page-heading, .content-card { margin-left: auto; margin-right: auto; max-width: 1160px; }
+.page-heading { align-items: end; display: flex; justify-content: space-between; padding: 3rem 2rem 2rem; }
+.eyebrow { color: #2563eb; font-size: .72rem; font-weight: 800; letter-spacing: .12em; margin: 0 0 .55rem; text-transform: uppercase; }
+.page-heading h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); letter-spacing: -.06em; line-height: 1; margin: 0; }
+.page-heading p:not(.eyebrow), .card-intro p, .role-hint { color: #667085; margin: .8rem 0 0; }
+.content-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 1.1rem; box-shadow: 0 12px 40px #18233c0d; margin-bottom: 4rem; min-height: 300px; overflow: hidden; }
+.card-intro { align-items: center; border-bottom: 1px solid #eaecf0; display: flex; justify-content: space-between; padding: 1.25rem 1.5rem; }
+.card-intro h2 { font-size: 1rem; margin: 0; }.card-intro p { font-size: .87rem; }
+.feedback { color: #667085; padding: 1rem 1.5rem; }.feedback.error { color: #a13232; }
+.person { align-items: center; display: flex; gap: .75rem; }.person strong { color: #172033; }
+.avatar { align-items: center; background: #e7efff; border-radius: 50%; color: #2563eb; display: flex; font-size: .8rem; font-weight: 800; height: 2.3rem; justify-content: center; width: 2.3rem; }
+.empty-state { align-items: center; color: #667085; display: flex; flex-direction: column; padding: 4.5rem 1.5rem; text-align: center; }.empty-state > i { color: #2563eb; font-size: 2rem; }.empty-state h2 { color: #172033; font-size: 1.2rem; margin: 1rem 0 .3rem; }.empty-state p { margin: 0; }
+:host ::ng-deep .users-prime-table .p-datatable-table { min-width: 650px; }:host ::ng-deep .users-prime-table .p-datatable-thead > tr > th { font-size: .73rem; letter-spacing: .06em; text-transform: uppercase; }:host ::ng-deep .users-prime-table .p-datatable-tbody > tr > td { color: #475467; font-size: .9rem; }
+.drawer-title h2 { font-size: 1.55rem; letter-spacing: -.04em; margin: 0; }.drawer-intro { border-bottom: 1px solid #eaecf0; color: #667085; line-height: 1.55; margin-bottom: 1.4rem; padding-bottom: 1.25rem; }.drawer-intro p { margin: 0; }
+.user-drawer-form { display: flex; flex-direction: column; gap: 1.1rem; }.user-drawer-form label { color: #344054; display: flex; flex-direction: column; font-size: .82rem; font-weight: 700; gap: .42rem; }.user-drawer-form small { color: #aa3c3c; font-weight: 500; }
+:host ::ng-deep .user-drawer-form .p-inputtext, :host ::ng-deep .user-drawer-form .drawer-password, :host ::ng-deep .user-drawer-form .drawer-password .p-password-input { width: 100%; }:host ::ng-deep .user-drawer-form .p-inputtext, :host ::ng-deep .user-drawer-form .drawer-password .p-password-input { min-height: 44px; }.role-native-select { appearance: auto; background: #fff; border: 1px solid #cbd5e1; border-radius: .5rem; color: #344054; font: inherit; min-height: 44px; padding: .6rem .75rem; width: 100%; }
+.role-hint { align-items: flex-start; background: #f4f7ff; border-radius: .6rem; display: flex; font-size: .84rem; gap: .55rem; line-height: 1.45; padding: .85rem; }.role-hint i { color: #2563eb; margin-top: .1rem; }.role-hint { margin: 0; }
+.form-actions { border-top: 1px solid #eaecf0; display: flex; gap: .7rem; justify-content: end; margin-top: .75rem; padding-top: 1.25rem; }
+@media (max-width: 700px) { .page-heading { align-items: start; flex-direction: column; gap: 1.5rem; padding-left: 1.25rem; padding-right: 1.25rem; }.content-card { border-radius: 0; margin-bottom: 0; } }
+
+
+.person small { color: #667085; display: block; font-size: .74rem; font-weight: 500; margin-top: .18rem; }
+:host ::ng-deep .users-prime-table .row-actions { text-align: right; white-space: nowrap; }
+:host ::ng-deep .users-prime-table .p-datatable-thead > tr > th:last-child, :host ::ng-deep .users-prime-table .p-datatable-tbody > tr > td:last-child { background: #fff; position: sticky; right: 0; z-index: 1; }
+:host ::ng-deep .users-prime-table .p-datatable-thead > tr > th:last-child { background: #f8fafc; box-shadow: -8px 0 12px #18233c08; }
+:host ::ng-deep .users-prime-table .p-datatable-tbody > tr > td:last-child { box-shadow: -8px 0 12px #18233c08; }

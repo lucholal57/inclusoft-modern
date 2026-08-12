@@ -1,0 +1,23 @@
+<main class="login-page">
+  <section class="login-panel">
+    <a class="brand" href="/login"><span>i</span> INCLU<span>soft</span></a>
+    <p class="eyebrow">ACCESO AL SISTEMA</p>
+    <h1>Bienvenido.</h1>
+    <p class="subtitle">Ingresá con tu cuenta para continuar a la gestión institucional.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>Usuario
+        <input pInputText autocomplete="username" formControlName="username" placeholder="Tu usuario">
+        <small *ngIf="form.controls.username.touched && form.controls.username.invalid">Ingresá tu usuario.</small>
+      </label>
+      <label>Contraseña
+        <p-password formControlName="password" autocomplete="current-password" [feedback]="false" [toggleMask]="true" placeholder="Tu contraseña" styleClass="login-password" inputStyleClass="login-password-input" />
+        <small *ngIf="form.controls.password.touched && form.controls.password.invalid">Ingresá tu contraseña.</small>
+      </label>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p-button type="submit" label="Ingresar" icon="pi pi-arrow-right" iconPos="right" [loading]="submitting" [disabled]="submitting" styleClass="login-submit" />
+    </form>
+    <footer class="copyright">© 2026 Luciano Lucena. Todos los derechos reservados.</footer>
+  </section>
+  <aside class="login-aside"><div><p>CAAD RÍO GRANDE</p><h2>Gestión institucional,<br>en un solo lugar.</h2><span>Una plataforma de trabajo para acompañar la organización cotidiana del equipo.</span></div></aside>
+</main>

@@ -1,0 +1,9 @@
+package ar.org.inclusoft.api.staff;
+import java.util.List; import java.util.Map; import java.util.UUID; import jakarta.validation.Valid; import org.springframework.http.*; import org.springframework.security.access.prepost.PreAuthorize; import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/v1/staff-members") public class StaffMemberController { private final StaffMemberService service; StaffMemberController(StaffMemberService service) { this.service = service; }
+ @GetMapping @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','VICE_DIRECTOR')") public List<StaffMemberResponse> findAll(@RequestParam(required=false) String search) { return service.findAll(search); }
+ @PostMapping @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','VICE_DIRECTOR')") public ResponseEntity<StaffMemberResponse> create(@Valid @RequestBody StaffMemberRequest request) { return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request)); }
+ @PutMapping("/{id}") @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','VICE_DIRECTOR')") public StaffMemberResponse update(@PathVariable UUID id,@Valid @RequestBody StaffMemberRequest request) { return service.update(id,request); }
+ @PatchMapping("/{id}/deactivate") @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','VICE_DIRECTOR')") public StaffMemberResponse deactivate(@PathVariable UUID id) { return service.deactivate(id); }
+ @PatchMapping("/{id}/activate") @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','VICE_DIRECTOR')") public StaffMemberResponse activate(@PathVariable UUID id) { return service.activate(id); }
+ @ExceptionHandler(IllegalArgumentException.class) ResponseEntity<Map<String,String>> problem(IllegalArgumentException error) { return ResponseEntity.badRequest().body(Map.of("message",error.getMessage())); } }

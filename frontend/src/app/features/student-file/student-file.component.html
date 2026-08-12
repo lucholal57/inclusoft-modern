@@ -1,0 +1,69 @@
+<div class="app-shell">
+  <app-navigation />
+  <main class="student-file-page">
+    <a class="back-link" routerLink="/alumnos"><i class="pi pi-arrow-left"></i> Volver a alumnos</a>
+
+    <p *ngIf="loading" class="feedback">Cargando ficha…</p>
+    <p *ngIf="error" class="feedback error">{{ error }}</p>
+
+    <ng-container *ngIf="student && !loading">
+      <header class="file-hero">
+        <span class="file-avatar">{{ student.firstName.charAt(0) }}{{ student.lastName.charAt(0) }}</span>
+        <div>
+          <p class="eyebrow">Ficha del alumno</p>
+          <h1>{{ student.lastName }}, {{ student.firstName }}</h1>
+          <p>DNI {{ student.documentNumber }} · {{ student.status === 'ACTIVE' ? 'Legajo activo' : 'Legajo inactivo' }}</p>
+        </div>
+        <p-tag [value]="student.status === 'ACTIVE' ? 'Activo' : 'Inactivo'" [severity]="student.status === 'ACTIVE' ? 'success' : 'secondary'" />
+      </header>
+
+      <section class="file-intro">
+        <div>
+          <p class="eyebrow">Parte 1 de 3</p>
+          <h2>Familia y contactos</h2>
+          <p>Registrá referentes familiares, responsables institucionales y contactos de emergencia.</p>
+        </div>
+        <p-button *ngIf="canEdit" label="Agregar contacto" icon="pi pi-plus" severity="secondary" [outlined]="true" (onClick)="addContact()" />
+      </section>
+      <nav class="file-steps" aria-label="Secciones de la ficha"><span class="active">1. Familia y contactos</span><a [routerLink]="['/alumnos', student.id, 'salud']">2. Salud y apoyos</a><a [routerLink]="['/alumnos', student.id, 'autorizaciones']">3. Autorizaciones</a></nav>
+
+      <div class="empty-file" *ngIf="!contacts.length">
+        <i class="pi pi-users"></i>
+        <h2>Aún no hay contactos registrados</h2>
+        <p>Agregá al menos una persona responsable para completar esta parte de la ficha.</p>
+        <p-button *ngIf="canEdit" label="Agregar primer contacto" icon="pi pi-plus" (onClick)="addContact()" />
+      </div>
+
+      <form *ngIf="contacts.length" class="contacts-form" [formGroup]="form" (ngSubmit)="save()">
+        <div *ngIf="saveSuccess" class="file-save-success" role="status">
+          <i class="pi pi-check-circle"></i><span>{{ saveSuccess }}</span>
+        </div>
+        <div *ngIf="saveError" class="file-save-error" role="alert">
+          <i class="pi pi-exclamation-circle"></i><span>{{ saveError }}</span>
+        </div>
+        <section formArrayName="contacts" class="contacts-list">
+          <article class="contact-card" *ngFor="let contact of contacts.controls; let index = index" [formGroupName]="index">
+            <header>
+              <div><span class="contact-index">{{ index + 1 }}</span><h3>Contacto {{ index + 1 }}</h3></div>
+              <p-button *ngIf="canEdit" icon="pi pi-trash" severity="danger" [text]="true" type="button" ariaLabel="Quitar contacto" (onClick)="removeContact(index)" />
+            </header>
+            <div class="contact-grid">
+              <label>Nombre completo<input pInputText formControlName="fullName" [readonly]="!canEdit" /></label>
+              <label>Vínculo<input pInputText formControlName="relationship" placeholder="Ej. Madre, tutor/a, hermano/a" [readonly]="!canEdit" /></label>
+              <label>Teléfono<input pInputText formControlName="phoneNumber" inputmode="tel" [readonly]="!canEdit" /></label>
+              <label>Correo electrónico <span>Opcional</span><input pInputText formControlName="email" inputmode="email" [readonly]="!canEdit" /></label>
+            </div>
+            <div class="contact-flags">
+              <label><p-checkbox formControlName="responsible" [binary]="true" [readonly]="!canEdit" /> Responsable del alumno</label>
+              <label><p-checkbox formControlName="emergencyContact" [binary]="true" [readonly]="!canEdit" /> Contacto de emergencia</label>
+            </div>
+          </article>
+        </section>
+        <div *ngIf="canEdit" class="file-actions">
+          <p-button label="Agregar otro contacto" icon="pi pi-plus" severity="secondary" [outlined]="true" type="button" (onClick)="addContact()" />
+          <p-button label="Guardar contactos" type="submit" [loading]="saving" [disabled]="saving || form.invalid || !form.dirty" />
+        </div>
+      </form>
+    </ng-container>
+  </main>
+</div>

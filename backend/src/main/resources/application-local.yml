@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/inclusoft_dev
+    username: inclusoft_app
+    password: ${INCLUSOFT_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+inclusoft:
+  security:
+    jwt-secret: ${INCLUSOFT_JWT_SECRET}
+  bootstrap:
+    admin-username: admin
+    admin-password: ${INCLUSOFT_BOOTSTRAP_ADMIN_PASSWORD:}

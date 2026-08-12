@@ -1,0 +1,21 @@
+<aside class="sidebar">
+  <a class="brand" routerLink="/"><span class="brand-mark">i</span><span>INCLU<span>soft</span></span></a>
+  <p class="institution">CAAD Río Grande</p>
+  <nav aria-label="Módulos principales">
+    <p class="nav-label">Panel</p>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="pi pi-home nav-icon"></i><span>Resumen</span></a>
+    <p class="nav-label">Gestión</p>
+    <a routerLink="/alumnos" routerLinkActive="active"><i class="pi pi-users nav-icon"></i><span>Alumnos</span></a>
+    <a routerLink="/talleres" routerLinkActive="active"><i class="pi pi-calendar nav-icon"></i><span>Talleres</span></a>
+    <a routerLink="/asistencia" routerLinkActive="active"><i class="pi pi-check-square nav-icon"></i><span>Asistencia</span></a>
+    @if (authService.session()?.role !== 'TEACHER') {
+      <a routerLink="/personal" routerLinkActive="active"><i class="pi pi-briefcase nav-icon"></i><span>Personal</span></a>
+    }
+    @if (authService.session()?.role === 'ADMIN' || authService.session()?.role === 'DIRECTOR') {
+      <p class="nav-label access-label">Administración</p>
+      <a routerLink="/usuarios" routerLinkActive="active"><i class="pi pi-key nav-icon"></i><span>Usuarios</span></a>
+    }
+  </nav>
+  <div class="sidebar-tip"><i class="pi pi-sparkles"></i><span>Gestión clara para cada jornada.</span></div>
+  <div class="sidebar-footer"><span class="user-badge">{{ authService.session()?.displayName?.charAt(0) || 'A' }}</span><div><strong>{{ authService.session()?.displayName || 'Administración' }}</strong><small>{{ authService.session()?.role || 'Sesión local' }}</small></div><button type="button" (click)="authService.logout()" routerLink="/login" aria-label="Cerrar sesión"><i class="pi pi-sign-out"></i></button></div>
+</aside>

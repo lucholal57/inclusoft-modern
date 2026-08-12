@@ -1,0 +1,36 @@
+<div class="app-shell">
+  <app-navigation />
+  <main class="dashboard">
+    <section class="dashboard-heading dashboard-context-card">
+      <div>
+        <p class="eyebrow">Centro de gestión</p>
+        <h1>Buen día, {{ greetingName }}</h1>
+        <p class="heading-copy">Una vista rápida para acompañar la jornada del instituto.</p>
+      </div>
+      <span class="today"><i class="pi pi-calendar"></i>{{ today | date:"EEEE, d 'de' MMMM" }}</span>
+    </section>
+
+    <ng-container *ngIf="canManageInstitute; else teacherSummary">
+      <section class="metrics" aria-label="Estado institucional">
+        <article class="metric-card students"><span class="metric-icon"><i class="pi pi-users"></i></span><p>Alumnos registrados</p><strong>{{ loading ? '—' : studentCount ?? '—' }}</strong><small class="metric-detail"><i class="pi pi-check-circle"></i>{{ loading ? 'Cargando…' : (activeStudentCount ?? 0) + ' con legajo activo' }}</small><a routerLink="/alumnos">Gestionar alumnos <i class="pi pi-arrow-right"></i></a></article>
+        <article class="metric-card workshops"><span class="metric-icon"><i class="pi pi-book"></i></span><p>Talleres activos</p><strong>{{ loading ? '—' : activeWorkshopCount ?? '—' }}</strong><small class="metric-detail"><i class="pi pi-users"></i>{{ loading ? 'Cargando…' : (totalWorkshopCapacity ?? 0) + ' lugares disponibles' }}</small><a routerLink="/talleres">Organizar talleres <i class="pi pi-arrow-right"></i></a></article>
+        <article class="metric-card staff"><span class="metric-icon"><i class="pi pi-briefcase"></i></span><p>Personal activo</p><strong>{{ loading ? '—' : activeStaffCount ?? '—' }}</strong><small class="metric-detail"><i class="pi pi-users"></i>{{ loading ? 'Cargando…' : (staffCount ?? 0) + ' personas registradas' }}</small><a routerLink="/personal">Ver equipo <i class="pi pi-arrow-right"></i></a></article>
+      </section>
+
+      <section class="management-section">
+        <div class="section-heading"><div><p class="eyebrow">Accesos rápidos</p><h2>Gestión del instituto</h2><p>Entrá directo al área que necesitás resolver.</p></div></div>
+        <div class="management-grid">
+          <a class="management-card students" routerLink="/alumnos"><span class="management-icon"><i class="pi pi-id-card"></i></span><div><strong>Alumnos</strong><small>Legajos, contactos, salud y autorizaciones.</small></div><i class="pi pi-arrow-right"></i></a>
+          <a class="management-card workshops" routerLink="/talleres"><span class="management-icon"><i class="pi pi-calendar"></i></span><div><strong>Talleres</strong><small>Agenda, cupos, equipo y alumnos asignados.</small></div><i class="pi pi-arrow-right"></i></a>
+          <a class="management-card staff" routerLink="/personal"><span class="management-icon"><i class="pi pi-users"></i></span><div><strong>Personal</strong><small>Docentes, acompañantes y auxiliares.</small></div><i class="pi pi-arrow-right"></i></a>
+          <a class="management-card attendance" routerLink="/asistencia"><span class="management-icon"><i class="pi pi-check-square"></i></span><div><strong>Asistencia</strong><small>Registro diario por taller y participantes.</small></div><i class="pi pi-arrow-right"></i></a>
+          <a *ngIf="canManageUsers" class="management-card users" routerLink="/usuarios"><span class="management-icon"><i class="pi pi-key"></i></span><div><strong>Usuarios</strong><small>Accesos, perfiles y contraseñas iniciales.</small></div><i class="pi pi-arrow-right"></i></a>
+        </div>
+      </section>
+
+      <section class="follow-up-card"><span class="follow-up-icon"><i class="pi pi-chart-line"></i></span><div><p class="eyebrow">Seguimiento</p><h2>Indicadores en evolución</h2><p>Cuando el equipo empiece a registrar jornadas, este espacio mostrará asistencia, participación y señales útiles por taller.</p></div><a routerLink="/asistencia">Ir a asistencia <i class="pi pi-arrow-right"></i></a></section>
+    </ng-container>
+
+    <ng-template #teacherSummary><section class="teacher-summary"><span><i class="pi pi-calendar-check"></i></span><div><p class="eyebrow">Tu jornada</p><h2>Consultá tus talleres y registrá asistencia.</h2><p>Desde Asistencia podés registrar la jornada de los talleres que tenés asignados.</p></div><a routerLink="/asistencia">Ir a asistencia <i class="pi pi-arrow-right"></i></a></section></ng-template>
+  </main>
+</div>

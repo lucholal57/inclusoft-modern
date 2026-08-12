@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+inclusoft:
+  web:
+    allowed-origins: ${INCLUSOFT_ALLOWED_ORIGINS:https://inclusoft-modern.vercel.app}
+  security:
+    jwt-secret: ${INCLUSOFT_JWT_SECRET}
+  bootstrap:
+    admin-username: ${INCLUSOFT_BOOTSTRAP_ADMIN_USERNAME:admin}
+    admin-password: ${INCLUSOFT_BOOTSTRAP_ADMIN_PASSWORD}

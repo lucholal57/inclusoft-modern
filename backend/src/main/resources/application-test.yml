@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:inclusoft-test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+inclusoft:
+  security:
+    jwt-secret: test-secret-that-has-at-least-thirty-two-characters

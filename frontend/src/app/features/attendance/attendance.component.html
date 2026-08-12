@@ -1,0 +1,29 @@
+<div class="app-shell">
+  <app-navigation />
+  <main class="attendance-page">
+    <section class="page-heading attendance-context-card">
+      <div><p class="eyebrow">Registro diario</p><h1>Asistencia</h1><p>Registrá la jornada de alumnos y equipo por taller.</p></div>
+      <div class="date-control"><span>Fecha de la jornada</span><p-datepicker [(ngModel)]="date" (onSelect)="load()" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body" /></div>
+    </section>
+    <p *ngIf="error" class="feedback error"><i class="pi pi-exclamation-circle"></i>{{ error }}</p>
+    <p *ngIf="success" class="feedback success"><i class="pi pi-check-circle"></i>{{ success }}</p>
+    <p *ngIf="loading" class="feedback">Cargando talleres…</p>
+    <section *ngIf="!loading" class="attendance-layout">
+      <aside class="workshop-list">
+        <div class="list-title"><div><p class="eyebrow">Agenda</p><h2>Talleres del día</h2><p>{{ sessions.length }} disponibles</p></div><span class="agenda-icon"><i class="pi pi-clipboard"></i></span></div>
+        <div class="workshop-choices">
+          <button *ngFor="let session of sessions" class="workshop-choice" [class.saved]="session.saved" [class.selected]="selected?.workshopId === session.workshopId" (click)="select(session)"><span class="workshop-icon"><i [class]="session.saved ? 'pi pi-check' : 'pi pi-bookmark'"></i></span><span class="workshop-text"><strong>{{ session.workshopName }}</strong><small>{{ session.entries.length }} personas asignadas</small></span><span class="session-state" [class.done]="session.saved">{{ session.saved ? 'Registrada' : 'Pendiente' }}</span></button>
+        </div>
+        <div *ngIf="!sessions.length" class="empty"><i class="pi pi-calendar-times"></i><h3>Sin talleres</h3><p>No hay talleres programados para esta fecha.</p></div>
+      </aside>
+      <section class="session-panel" *ngIf="selected; else chooseWorkshop">
+        <header class="session-header"><div><p class="eyebrow">{{ selected.saved ? 'Jornada registrada' : 'Nueva jornada' }}</p><h2>{{ selected.workshopName }}</h2><p>Confirmá la asistencia de cada integrante antes de guardar.</p></div><p-tag [value]="selected.saved ? 'Registrada' : 'Borrador'" [severity]="selected.saved ? 'success' : 'warn'" /></header>
+        <div class="participant-section"><div class="section-label"><h3>Alumnos</h3><span>{{ students().length }}</span></div><div class="participant-list"><div class="participant" *ngFor="let entry of students()" [class.absent]="entry.status.startsWith('ABSENT')" [class.late]="entry.status === 'LATE'"><div class="participant-avatar">{{ entry.participantName.charAt(0) }}</div><div class="participant-data"><strong>{{ entry.participantName }}</strong><small>Alumno</small></div><select [(ngModel)]="entry.status"><option *ngFor="let status of statuses" [value]="status.value">{{ status.label }}</option></select></div></div></div>
+        <div class="participant-section"><div class="section-label"><h3>Equipo del taller</h3><span>{{ staff().length }}</span></div><div class="participant-list"><div class="participant" *ngFor="let entry of staff()" [class.absent]="entry.status.startsWith('ABSENT')" [class.late]="entry.status === 'LATE'"><div class="participant-avatar staff">{{ entry.participantName.charAt(0) }}</div><div class="participant-data"><strong>{{ entry.participantName }}</strong><small>Personal asignado</small></div><select [(ngModel)]="entry.status"><option *ngFor="let status of statuses" [value]="status.value">{{ status.label }}</option></select></div></div></div>
+        <label class="notes"><span>Observación de la jornada <em>Opcional</em></span><textarea pInputTextarea [(ngModel)]="selected.notes" rows="3" placeholder="Situación general, novedades o aclaraciones."></textarea></label>
+        <footer class="session-actions"><span>Los cambios quedan registrados para esta fecha.</span><p-button label="Guardar jornada" icon="pi pi-check" [loading]="saving" [disabled]="saving" (onClick)="save()" /></footer>
+      </section>
+      <ng-template #chooseWorkshop><section class="choose-workshop"><span class="choose-icon"><i class="pi pi-clipboard"></i></span><h2>Elegí un taller</h2><p>Vas a ver la lista de alumnos y equipo para registrar la jornada.</p></section></ng-template>
+    </section>
+  </main>
+</div>

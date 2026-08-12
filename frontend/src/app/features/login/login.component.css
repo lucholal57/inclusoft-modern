@@ -1,0 +1,24 @@
+.login-page { background: #f8fafc; color: #172033; display: grid; grid-template-columns: 1fr .9fr; min-height: 100vh; }
+.login-panel { display: flex; flex-direction: column; justify-content: center; margin: 0 auto; max-width: 430px; padding: 3rem; width: 100%; }
+.brand { color: #172033; font-size: 1.25rem; font-weight: 850; letter-spacing: -.04em; margin-bottom: 5rem; text-decoration: none; }
+.brand > span:first-child { background: #172033; border-radius: .4rem; color: #fff; display: inline-block; font-size: 1rem; margin-right: .4rem; padding: .25rem .5rem; }
+.brand > span:last-child, .eyebrow { color: #2563eb; }
+.eyebrow { font-size: .72rem; font-weight: 800; letter-spacing: .12em; margin: 0 0 .6rem; }
+.login-panel h1 { font-size: 2.65rem; letter-spacing: -.065em; margin: 0; }
+.subtitle { color: #667085; line-height: 1.6; margin: .75rem 0 2rem; }
+.login-panel form { display: flex; flex-direction: column; gap: 1.1rem; }
+.login-panel label { color: #344054; display: flex; flex-direction: column; font-size: .82rem; font-weight: 750; gap: .45rem; }
+:host ::ng-deep .login-panel .p-inputtext, .login-panel input[pInputText] { border-radius: .55rem; padding: .8rem .85rem; width: 100%; }
+:host ::ng-deep .login-panel .login-password, :host ::ng-deep .login-panel .login-password .p-password-input { width: 100%; }
+:host ::ng-deep .login-panel .login-password .p-password-input { border-radius: .55rem; padding: .8rem .85rem; }
+:host ::ng-deep .login-panel .login-submit { justify-content: center; margin-top: .5rem; padding: .82rem; width: 100%; }
+.login-panel small, .error { color: #b42318; font-size: .76rem; margin: 0; }
+.login-aside { background: #172033; color: #fff; display: flex; justify-content: center; overflow: hidden; padding: 3rem; position: relative; }
+.login-aside::before { border: 1px solid #2d4366; border-radius: 50%; content: ''; height: 650px; position: absolute; right: -200px; top: -220px; width: 650px; }
+.login-aside > div { align-self: center; max-width: 360px; position: relative; z-index: 1; }
+.login-aside p { color: #93c5fd; font-size: .75rem; font-weight: 800; letter-spacing: .12em; }
+.login-aside h2 { font-size: clamp(2.5rem, 4vw, 4rem); letter-spacing: -.07em; line-height: .95; margin: 1rem 0; }
+.login-aside span { color: #cbd5e1; line-height: 1.6; }
+.copyright { color: #98a2b3; font-size: .7rem; line-height: 1.45; margin: 2.25rem 0 0; }
+@media (max-width: 760px) { .login-page { display: block; }.login-panel { min-height: 100vh; padding: 2rem; }.brand { margin-bottom: 4rem; }.login-aside { display: none; } }
+
