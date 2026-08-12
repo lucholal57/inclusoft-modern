@@ -31,6 +31,23 @@
       <section class="follow-up-card"><span class="follow-up-icon"><i class="pi pi-chart-line"></i></span><div><p class="eyebrow">Seguimiento</p><h2>Indicadores en evolución</h2><p>Cuando el equipo empiece a registrar jornadas, este espacio mostrará asistencia, participación y señales útiles por taller.</p></div><a routerLink="/asistencia">Ir a asistencia <i class="pi pi-arrow-right"></i></a></section>
     </ng-container>
 
-    <ng-template #teacherSummary><section class="teacher-summary"><span><i class="pi pi-calendar-check"></i></span><div><p class="eyebrow">Tu jornada</p><h2>Consultá tus talleres y registrá asistencia.</h2><p>Desde Asistencia podés registrar la jornada de los talleres que tenés asignados.</p></div><a routerLink="/asistencia">Ir a asistencia <i class="pi pi-arrow-right"></i></a></section></ng-template>
+    <ng-template #teacherSummary>
+      <section class="teacher-overview" aria-label="Resumen de la jornada docente">
+        <article class="teacher-metric workshops"><span class="teacher-metric-icon"><i class="pi pi-calendar"></i></span><p>Talleres de hoy</p><strong>{{ loading ? '—' : teacherTodayWorkshops.length }}</strong><small>{{ loading ? 'Cargando tu agenda…' : (teacherTodayWorkshops.length ? 'Según tus asignaciones actuales' : 'No tenés talleres asignados hoy') }}</small></article>
+        <article class="teacher-metric attendance"><span class="teacher-metric-icon"><i class="pi pi-check-square"></i></span><p>Asistencia</p><strong>{{ loading ? '—' : teacherAttendancePending }}</strong><small>{{ loading ? 'Revisando la jornada…' : (teacherAttendancePending ? 'talleres pendientes de registrar' : 'Todo lo de hoy está registrado') }}</small></article>
+        <article class="teacher-metric students"><span class="teacher-metric-icon"><i class="pi pi-users"></i></span><p>Alumnos a cargo</p><strong>{{ loading ? '—' : teacherStudentCount ?? 0 }}</strong><small>{{ loading ? 'Cargando alumnos…' : 'Vinculados a tus talleres' }}</small></article>
+      </section>
+
+      <section class="teacher-workday">
+        <div class="teacher-workday-heading"><div><p class="eyebrow">Tu jornada</p><h2>Agenda de hoy</h2><p>Accedé directo a cada taller y registrá la asistencia cuando corresponda.</p></div><a routerLink="/asistencia">Ir a asistencia <i class="pi pi-arrow-right"></i></a></div>
+        <p class="teacher-load-error" *ngIf="teacherLoadError">No pudimos cargar tu jornada ahora. Podés ingresar desde Asistencia para reintentar.</p>
+        <div class="teacher-workshop-list" *ngIf="!loading && hasTeacherWorkshops">
+          <article class="teacher-workshop" *ngFor="let workshop of teacherTodayWorkshops"><span class="teacher-workshop-time">{{ workshop.schedule }}</span><div><strong>{{ workshop.name }}</strong><small><i class="pi pi-map-marker"></i>{{ workshop.location || 'Salón a confirmar' }}</small></div><span class="attendance-state" [class.saved]="workshop.saved"><i [class]="workshop.saved ? 'pi pi-check-circle' : 'pi pi-clock'"></i>{{ workshop.saved ? 'Registrada' : 'Pendiente' }}</span><a routerLink="/asistencia" [queryParams]="{ workshop: workshop.id }" aria-label="Ir a asistencia del taller"><i class="pi pi-arrow-right"></i></a></article>
+        </div>
+        <div class="teacher-empty" *ngIf="!loading && !teacherLoadError && !hasTeacherWorkshops"><i class="pi pi-calendar-minus"></i><div><strong>No tenés talleres asignados para hoy.</strong><p>Podés consultar el cronograma general desde Talleres.</p></div><a routerLink="/talleres">Ver talleres <i class="pi pi-arrow-right"></i></a></div>
+      </section>
+
+      <section class="teacher-actions"><a routerLink="/asistencia"><span><i class="pi pi-check-square"></i></span><div><strong>Registrar asistencia</strong><small>Completá la jornada de tus talleres.</small></div><i class="pi pi-arrow-right"></i></a><a routerLink="/talleres"><span><i class="pi pi-calendar"></i></span><div><strong>Consultar talleres</strong><small>Visualizá agenda, equipo y alumnos.</small></div><i class="pi pi-arrow-right"></i></a><a routerLink="/alumnos"><span><i class="pi pi-users"></i></span><div><strong>Consultar alumnos</strong><small>Accedé a sus datos y referencias.</small></div><i class="pi pi-arrow-right"></i></a></section>
+    </ng-template>
   </main>
 </div>
