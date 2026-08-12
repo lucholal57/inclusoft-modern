@@ -1,12 +1,12 @@
 services:
   - type: web
     name: inclusoft-api
-    runtime: java
+    runtime: docker
     plan: free
     region: ohio
     rootDir: backend
-    buildCommand: mvn -DskipTests package
-    startCommand: java -jar target/inclusoft-api-0.1.0-SNAPSHOT.jar
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /actuator/health
     envVars:
       - key: SPRING_PROFILES_ACTIVE
