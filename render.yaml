@@ -2,6 +2,8 @@ services:
   - type: web
     name: inclusoft-api
     runtime: java
+    plan: free
+    region: ohio
     rootDir: backend
     buildCommand: mvn -DskipTests package
     startCommand: java -jar target/inclusoft-api-0.1.0-SNAPSHOT.jar
